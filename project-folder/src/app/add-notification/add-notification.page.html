@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>add-notification</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button>
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+      <ion-label color="primary" position="floating">Title</ion-label>
+      <ion-input type="text"  [(ngModel)]="title" required>
+      </ion-input>
+    </ion-item>
+    <div id="timer">
+      <ion-datetime placeholder="Select Timer" [(ngModel)]="timer" display-format="hh mm A " picker-format="hh mm A" value="timer"></ion-datetime>
+    </div>
+    <ion-button id="timer-button" size="large" (click)="setNotification()" expand="block">
+      Set notification
+    </ion-button>
+    
+</ion-content>

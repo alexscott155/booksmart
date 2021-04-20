@@ -29,6 +29,14 @@ const routes: Routes = [
   {
     path: 'similar-books',
     loadChildren: () => import('./similar-books/similar-books.module').then( m => m.SimilarBooksPageModule)
+  },
+  {
+    path: 'add-notification',
+    loadChildren: () => import('./add-notification/add-notification.module').then( m => m.AddNotificationPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   }
 ];
 @NgModule({

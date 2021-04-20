@@ -10,17 +10,27 @@ const { SplashScreen } = Plugins;
 export class AppComponent implements OnInit{
   public currentPageIndex = 0;
   public menuPages = [
+    
     {
       title: 'Home',
       url: '/tabs/swipe',
       icon: 'home'
     },
     {
+      title: 'Settings',
+      url: '/settings',
+      icon: 'settings'
+    },
+    {
+      title: 'Notification',
+      url: '/notification',
+      icon: 'notifications'
+    },
+    {
       title: 'Bookshelf',
       url: '/bookshelf',
       icon: 'albums'
     }
-    
   ];
   constructor() {
     this.initializeApp();

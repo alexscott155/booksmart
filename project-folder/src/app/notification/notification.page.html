@@ -1,6 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>notification</ion-title>
+     <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="addNotification()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
