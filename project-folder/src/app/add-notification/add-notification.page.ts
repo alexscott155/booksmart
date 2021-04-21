@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AlertController } from '@ionic/angular';
-
+import firebase from 'firebase/app';
 @Component({
   selector: 'app-add-notification',
   templateUrl: './add-notification.page.html',
@@ -11,10 +13,15 @@ import { AlertController } from '@ionic/angular';
 export class AddNotificationPage implements OnInit {
   private timer: any;
   private title:any
-  constructor(private router: Router, private localNotifications: LocalNotifications, public alertController: AlertController) { 
+  public uid:any
+  constructor(private router: Router, private localNotifications: LocalNotifications, public alertController: AlertController, private db: AngularFirestore, private auth: AngularFireAuth) { 
+    
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.auth.user.subscribe(user =>{
+      this.uid =  user.uid
+    })
   }
 
   async noTitleAlert() {
@@ -57,14 +64,21 @@ export class AddNotificationPage implements OnInit {
       hour = result.hour
       minute = result.minute
     })
-    
+    await this.addNotification(hour,minute)
     this.localNotifications.schedule({
       title: this.title,
       id: 1,
-      trigger: { every: { hour: hour, minute: minute,  } }
+      trigger: { every: {hour: hour, minute: minute} }
     });
   }
-  
 
+  async addNotification(hour:any,minute:any){
+    let uid = await this.uid
+    let addData = {}
+    addData['title'] = this.title
+    addData['hour'] = hour
+    addData['minute'] = minute
+    return await this.db.collection("users/"+uid+"/notifications").add(addData)
+  }
   
 }

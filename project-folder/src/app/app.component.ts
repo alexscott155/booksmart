@@ -1,16 +1,18 @@
 import {Component, OnInit} from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
-
+import { MenuController } from '@ionic/angular'; 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit{
+  
   public currentPageIndex = 0;
   public menuPages = [
-    
     {
       title: 'Home',
       url: '/tabs/swipe',
@@ -32,12 +34,20 @@ export class AppComponent implements OnInit{
       icon: 'albums'
     }
   ];
-  constructor() {
+  constructor(private router: Router, private menuCtrl: MenuController, private auth: AngularFireAuth) {
     this.initializeApp();
   }
 
   initializeApp() {
     SplashScreen.hide();
+  }
+
+  async logout(){
+    this.menuCtrl.toggle();
+    // logging out
+    await this.auth.signOut().then(() => {
+    });
+    this.router.navigate([''])
   }
 
   ngOnInit() {

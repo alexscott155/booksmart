@@ -4,13 +4,17 @@
             <ion-content>
                 <ion-list id="inbox-list">
                     <ion-list-header>Book-Smart</ion-list-header>
-                    <ion-menu-toggle auto-hide="false" *ngFor="let p of menuPages; let i = index">
+                    <ion-menu-toggle auto-hide="true" *ngFor="let p of menuPages; let i = index">
                         <ion-item id="menu-items" (click)="currentPageIndex = i" routerDirection="root" [routerLink]="[p.url]"
                                   detail="false" [class.selected]="currentPageIndex == i">
                             <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                             <ion-label>{{ p.title }}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
+                    <ion-item id="menu-items" (click)="logout()">
+                        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+                            <ion-label>Log-out</ion-label>
+                        </ion-item>
                 </ion-list>
             </ion-content>
         </ion-menu>

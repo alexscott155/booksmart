@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login-page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form>    
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" #email required></ion-input>
+    </ion-item> 
+    <ion-item lines="full">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" #password required></ion-input>
+    </ion-item>
+      <ion-button type="submit" (click)="login(email, password)" expand="block" fill="outline" size="default">Login</ion-button>
+  </form>
+<ion-button type="submit" (click)="goRegister()"  expand="block"  fill="outline">Register</ion-button>
+</ion-content>

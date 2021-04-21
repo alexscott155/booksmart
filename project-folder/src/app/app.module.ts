@@ -7,11 +7,27 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CommonModule } from '@angular/common';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/'
+import { SETTINGS } from '@angular/fire/firestore'
+import {AngularFirestoreModule } from '@angular/fire/firestore'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyADndHN_dxAwLFGtO9exj2IymRwTNSylSA",
+  authDomain: "booksmart-7f4db.firebaseapp.com",
+  projectId: "booksmart-7f4db",
+  storageBucket: "booksmart-7f4db.appspot.com",
+  messagingSenderId: "1050161913100",
+  appId: "1:1050161913100:web:e84b57fe2d145385a63d29",
+  measurementId: "G-KV0J5EWSWY"
+};
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule, FormsModule,CommonModule],
-  providers: [LocalNotifications,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule, FormsModule,CommonModule, AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule],
+  providers: [AngularFirestoreModule, LocalNotifications,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: SETTINGS, useValue:{},}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
