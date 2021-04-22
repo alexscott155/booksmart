@@ -12,6 +12,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-</ion-content>
+ <ion-content [fullscreen]="true">
+  <ion-card *ngFor="let notification of (notificationList|async)">
+  
+    <ion-card-header>
+    
+      <ion-card-title>{{notification.title}} </ion-card-title>
+      <ion-card-subtitle>{{notification.day}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+    <ion-button id='button' fill="outline" (click)="deleteNotification(notification.id)">
+      <ion-icon  name="remove-circle-outline"></ion-icon>
+      </ion-button>
+      {{notification.time}}
+      
+    </ion-card-content>
+  </ion-card>

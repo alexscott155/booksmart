@@ -15,10 +15,16 @@
       </ion-input>
     </ion-item>
     <div id="timer">
+         <ion-item>
+        <ion-select [(ngModel)]="day">
+            <ion-select-option [value]="day" *ngFor="let day of daysOfWeek">{{ day }}</ion-select-option>
+        </ion-select>
+    </ion-item>
       <ion-datetime placeholder="Select Timer" [(ngModel)]="timer" display-format="hh mm A " picker-format="hh mm A" value="timer"></ion-datetime>
     </div>
     <ion-button id="timer-button" size="large" (click)="setNotification()" expand="block">
       Set notification
     </ion-button>
+
     
 </ion-content>

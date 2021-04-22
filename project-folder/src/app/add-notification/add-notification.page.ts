@@ -11,9 +11,11 @@ import firebase from 'firebase/app';
   styleUrls: ['./add-notification.page.scss'],
 })
 export class AddNotificationPage implements OnInit {
-  private timer: any;
-  private title:any
+  daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednsday', 'Thursday', 'Friday', 'Saturday', 'Everyday']
+  public timer: any;
+  public title:any
   public uid:any
+  public day:any
   constructor(private router: Router, private localNotifications: LocalNotifications, public alertController: AlertController, private db: AngularFirestore, private auth: AngularFireAuth) { 
     
   }
@@ -35,49 +37,40 @@ export class AddNotificationPage implements OnInit {
 
   }
 
-  async msToHourMinute(ms:number){
-    const setTime = new Promise((resolve, reject) => {
-      let daysms=ms % (24*60*60*1000);
-      let hours = Math.floor((daysms)/(60*60*1000));
-      let hoursms=ms % (60*60*1000);
-      let minutes = Math.floor((hoursms)/(60*1000));
-      if (hours === 0 && minutes === 0) {
-        hours = 12
-      }
-      resolve({hour:hours,minute:minutes})
-    })
-    return (setTime)
-}
 
   async setNotification() {
-    if (!await this.title || !await this.timer) {
+    if (!await this.title || !await this.timer || !await this.day) {
       await this.noTitleAlert()
       return;
     }
     let date = new Date(await this.timer)
-    let currentDate = new Date()
-    let hour:number
-    let minute:number 
-    // get time set by ms
-    let dif = Math.abs(date.getTime()-currentDate.getTime())
-    await this.msToHourMinute(dif).then((result:any)=>{
-      hour = result.hour
-      minute = result.minute
-    })
-    await this.addNotification(hour,minute)
-    this.localNotifications.schedule({
-      title: this.title,
-      id: 1,
-      trigger: { every: {hour: hour, minute: minute} }
-    });
+    console.log(date.toLocaleTimeString())
+    await this.addNotification(date.toLocaleTimeString())
   }
 
-  async addNotification(hour:any,minute:any){
+  
+  async numberbyDay(day:string){
+    let promiseday = new Promise((resolve,reject)=>{
+      resolve(this.daysOfWeek.indexOf(day))
+    })
+    return promiseday
+  }
+
+
+
+  async addNotification(time:any){
+    let numberbyDay:any
+    await this.numberbyDay(this.day).then(result=>{
+      numberbyDay = result
+    })
+    let date = new Date(await this.timer)
     let uid = await this.uid
     let addData = {}
+    addData['date'] = date
     addData['title'] = this.title
-    addData['hour'] = hour
-    addData['minute'] = minute
+    addData['day'] = this.day
+    addData['time'] = time
+    addData['numberbyDay'] = numberbyDay
     return await this.db.collection("users/"+uid+"/notifications").add(addData)
   }
   

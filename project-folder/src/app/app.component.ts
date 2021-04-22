@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
 import { MenuController } from '@ionic/angular'; 
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -34,8 +35,10 @@ export class AppComponent implements OnInit{
       icon: 'albums'
     }
   ];
-  constructor(private router: Router, private menuCtrl: MenuController, private auth: AngularFireAuth) {
+  constructor(private router: Router, private menuCtrl: MenuController, private auth: AngularFireAuth, private backgroundMode: BackgroundMode) {
     this.initializeApp();
+    // enable background mode to allow for local notification to work
+    this.backgroundMode.enable();
   }
 
   initializeApp() {
@@ -46,6 +49,8 @@ export class AppComponent implements OnInit{
     this.menuCtrl.toggle();
     // logging out
     await this.auth.signOut().then(() => {
+      // disable background mode because nothing should be running if logged out.
+      this.backgroundMode.disable();
     });
     this.router.navigate([''])
   }
