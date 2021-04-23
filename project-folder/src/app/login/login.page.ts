@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-login',
@@ -12,25 +13,16 @@ import firebase from 'firebase/app';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  loginInfo: any;
-  userID :any
-  accountType:any
-  constructor(private router: Router, private alertController: AlertController,private auth: AngularFireAuth, public afStore: AngularFirestore) { }
+
+  constructor(
+    private router: Router, 
+    private alertController: AlertController,
+    private auth: AngularFireAuth, 
+    public afStore: AngularFirestore,
+    public firebaseService: FirebaseService) { }
   
-  ngOnInit() {}
+  ngOnInit() {
 
-
-  async login(email:any, password:any) {
-    this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
-  .then(async () => {
-    return await this.auth.signInWithEmailAndPassword(email.value, password.value)
-      .then(async (user) => {
-        this.router.navigateByUrl('tabs')
-      })
-      .catch((error) => {
-        this.errorLogin(error)
-      })
-  })
   }
   
 
@@ -39,14 +31,6 @@ export class LoginPage implements OnInit {
   }
 
 
-  async errorLogin(error:any) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Error',
-      message: error,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
+
 
 }

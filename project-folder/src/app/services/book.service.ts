@@ -21,6 +21,10 @@ export class BookService {
     return this.http.get(dataUrl);
   }
 
+  setInterests(interests: string){
+    
+  }
+
 
 }
 
