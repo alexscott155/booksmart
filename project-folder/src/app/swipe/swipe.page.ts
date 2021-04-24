@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { MenuController } from '@ionic/angular';
 import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
 import { BookService } from '../services/book.service';
 @Component({
   selector: 'app-swipe',
@@ -10,6 +12,8 @@ import { BookService } from '../services/book.service';
 export class SwipePage implements OnInit {
   books:string;
   parsedBooks:any;
+  private wishes: Observable<InterestType[]>;
+  private wishesCollection: AngularFirestoreCollection<InterestType>;
   constructor(
     private menu: MenuController,
     public bookService: BookService

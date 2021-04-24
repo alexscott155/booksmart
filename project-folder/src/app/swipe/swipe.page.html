@@ -20,6 +20,11 @@
           <ion-img src={{book.volumeInfo.imageLinks.thumbnail}}></ion-img>
         </ion-thumbnail>
       </ion-label>
+      <ion-button (onclick)=addToWishlist(book.id)>
+   
+      </ion-button>
+
+
       <ion-label>
         {{book.volumeInfo.title}}
       </ion-label>

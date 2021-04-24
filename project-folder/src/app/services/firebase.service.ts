@@ -9,19 +9,22 @@ import firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class FirebaseService {
-
+  uid='';
   constructor(
     public auth: AngularFireAuth,
     public angularFirestore: AngularFirestore,
     private router: Router,
     private alertController: AlertController
   ) { }
-
+  
   async login(email:any, password:any) {
+    var self = this;
     this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
   .then(async () => {
     return await this.auth.signInWithEmailAndPassword(email.value, password.value)
-      .then(async (user) => {
+      .then(async (resp) => {
+        self.uid = firebase.auth().currentUser.uid;
+        console.log("uid in fb",this.uid)
         this.router.navigateByUrl('tabs')
       })
       .catch((error) => {
