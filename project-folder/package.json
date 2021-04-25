@@ -23,6 +23,7 @@
     "@capacitor/core": "2.4.7",
     "@firebase/app": "^0.6.15",
     "@ionic-native/background-mode": "^5.32.1",
+    "@ionic-native/core": "^5.32.1",
     "@ionic-native/local-notifications": "^5.32.1",
     "@ionic/angular": "^5.5.2",
     "animate.css": "^4.1.1",

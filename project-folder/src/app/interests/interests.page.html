@@ -12,7 +12,7 @@
   <ion-input [(ngModel)]="userInterest.interest" placeholder="Enter Input" ></ion-input>
   <ion-button (click)="createInterest(userInterest)" expand="block" type="submit">Update</ion-button>
   <ion-item class="" *ngFor="let interest of (interests | async)">
-    <ion-label class="">
+    <ion-label class="" (click)="bookService.pickBook(interests)">
       <ion-thumbnail slot="start">
 
         {{interest.interest}}

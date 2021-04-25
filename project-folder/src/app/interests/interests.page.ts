@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from 
 import { map, take } from 'rxjs/operators';
 import { InterestType } from '../models/interest.model'
 import { FirebaseService } from '../services/firebase.service';
+import { BookService } from '../services/book.service';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class InterestsPage implements OnInit {
 
   constructor(
     private angularFirestore: AngularFirestore,
-    public firebaseService: FirebaseService
+    public firebaseService: FirebaseService,
+    public bookService: BookService
     ) {
     console.log("getting this user: ", this.uid)
     this.interestCollection = this.angularFirestore.collection<InterestType>('interests', ref=> ref.where('uid', "==", this.uid));
@@ -62,5 +64,9 @@ export class InterestsPage implements OnInit {
     this.userInterest.interest = '';
     return this.interestCollection.add(temp);
     
+  }
+
+  logInterests(interests){
+    console.log(interests[0]);
   }
 }
