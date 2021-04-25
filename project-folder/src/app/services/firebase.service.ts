@@ -14,16 +14,24 @@ export class FirebaseService {
     public angularFirestore: AngularFirestore,
     private router: Router,
     private alertController: AlertController,
-  ) { }
+  ) 
+  {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.uid = user.uid;
+      } else {
+        console.log("not signed in")
+      }
+    });
+  }
   
   async login(email:any, password:any) {
-    var self = this;
-    this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(async () => {
       return await this.auth.signInWithEmailAndPassword(email.value, password.value)
         .then(async (resp) => {
           localStorage.setItem('loggedin', 'true')
-          self.uid = firebase.auth().currentUser.uid;
+          
           console.log("uid in fb",this.uid)
           this.router.navigateByUrl('tabs')
         })
