@@ -52,6 +52,18 @@ const routes: Routes = [
   {
     path: 'interests',
     loadChildren: () => import('./interests/interests.module').then( m => m.InterestsPageModule)
+  },
+  {
+    path: 'wishlist',
+    loadChildren: () => import('./wishlist/wishlist.module').then( m => m.WishlistPageModule)
+  },
+  {
+    path: 'streak',
+    loadChildren: () => import('./streak/streak.module').then( m => m.StreakPageModule)
+  },
+  {
+    path: 'change',
+    loadChildren: () => import('./change/change.module').then( m => m.ChangePageModule)
   }
 ];
 @NgModule({

@@ -6,10 +6,22 @@
     <ion-title>
       Swipe
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="'/wishlist'">
+        <div class="wishlist-length">{{ wishlistItemCount | async }}</div>
+        <ion-icon name="star-outline" class="star-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Books</ion-label>
+      
+    </ion-list-header>
   <!-- {{this.parsedBooks[0].volumeInfo.title}} -->
   <!-- <ion-list> -->
     <!-- <ion-item class="" *ngFor="let book of (books | async)" (click)="openbookDetails(book.id)"> -->
@@ -28,6 +40,9 @@
       <ion-label>
         {{book.volumeInfo.title}}
       </ion-label>
+        <ion-button fill="clear" (click)="addToWishlist(book)">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
     </ion-item>
-  <!-- </ion-list>  -->
+  </ion-list>
 </ion-content>
