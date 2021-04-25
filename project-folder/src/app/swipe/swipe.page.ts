@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AngularFirestoreCollection } from '@angular/fire/firestore';
+
 import { MenuController } from '@ionic/angular';
 import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
 import { BookService } from '../services/book.service';
 import { WishlistService } from './../services/wishlist.service';
 import { WishlistPage } from '../wishlist/wishlist.page';
@@ -21,8 +24,6 @@ export class SwipePage implements OnInit {
 
   books:string;
   parsedBooks:any;
-  
-  
 
   constructor(
     private menu: MenuController,
