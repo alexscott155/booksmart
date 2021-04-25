@@ -25,6 +25,7 @@
     "@ionic-native/background-mode": "^5.32.1",
     "@ionic-native/local-notifications": "^5.32.1",
     "@ionic/angular": "^5.5.2",
+    "animate.css": "^4.1.1",
     "cordova-plugin-local-notification": "*",
     "firebase": "^8.2.9",
     "rxjs": "~6.6.0",
