@@ -12,6 +12,7 @@ import { AngularFireModule } from '@angular/fire/'
 import { SETTINGS } from '@angular/fire/firestore'
 import {AngularFirestoreModule } from '@angular/fire/firestore'
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { IonicStorageModule  } from '@ionic/storage-angular';
 
 const firebaseConfig = {
   apiKey: "AIzaSyADndHN_dxAwLFGtO9exj2IymRwTNSylSA",
@@ -26,7 +27,7 @@ const firebaseConfig = {
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule, FormsModule,CommonModule, AngularFireModule.initializeApp(firebaseConfig),
+  imports: [IonicStorageModule.forRoot() ,BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule, FormsModule,CommonModule, AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule],
   providers: [BackgroundMode, AngularFirestoreModule, LocalNotifications,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: SETTINGS, useValue:{},}],
   bootstrap: [AppComponent],

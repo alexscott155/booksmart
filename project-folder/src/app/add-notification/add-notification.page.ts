@@ -11,7 +11,7 @@ import firebase from 'firebase/app';
   styleUrls: ['./add-notification.page.scss'],
 })
 export class AddNotificationPage implements OnInit {
-  daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednsday', 'Thursday', 'Friday', 'Saturday', 'Everyday']
+  daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Everyday']
   public timer: any;
   public title:any
   public uid:any

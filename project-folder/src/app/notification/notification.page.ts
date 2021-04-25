@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import {FirebaseService} from '../services/firebase.service'
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { notification } from '../modal/notifications'
+import { notification } from '../models/notifications'
 import { map } from 'rxjs/operators';
-import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -18,11 +18,10 @@ export class NotificationPage implements OnInit {
   private notificationCollection:AngularFirestoreCollection<notification>;
   public uid:any
   public data:any
-  constructor(private router: Router,private db: AngularFirestore, private auth: AngularFireAuth, private localNotifications: LocalNotifications) {
+  constructor(private router: Router,private db: AngularFirestore, private auth: FirebaseService, private localNotifications: LocalNotifications) {
 
-    this.auth.user.subscribe(user =>{
-      this.uid = user.uid
-      this.notificationCollection = this.db.collection<notification>('users/'+user.uid+"/notifications");
+      this.uid = this.auth.uid
+      this.notificationCollection = this.db.collection<notification>('users/'+this.auth.uid+'/notifications');
       this.notification = this.notificationCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
@@ -44,7 +43,6 @@ export class NotificationPage implements OnInit {
         });
       }))
       this.notificationList = this.notification
-    })
   }
 
   ngOnInit() {

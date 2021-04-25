@@ -3,8 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
-import { MenuController } from '@ionic/angular'; 
+import { MenuController, Platform } from '@ionic/angular'; 
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -35,13 +36,30 @@ export class AppComponent implements OnInit{
       icon: 'albums'
     }
   ];
-  constructor(private router: Router, private menuCtrl: MenuController, private auth: AngularFireAuth, private backgroundMode: BackgroundMode) {
-    this.initializeApp();
-    // enable background mode to allow for local notification to work
-    this.backgroundMode.enable();
+  constructor(private platform: Platform ,private router: Router, private menuCtrl: MenuController,
+     private auth: AngularFireAuth, private backgroundMode: BackgroundMode
+     ) {
+
+      this.checkUser()
+      this.initializeApp();
+      // enable background mode to allow for local notification to work
+      this.backgroundMode.enable();
+  }
+  
+  async checkUser(){
+    this.platform.ready().then(async () => {
+      let isLoggedIn = localStorage.getItem('loggedin')
+      console.log(isLoggedIn)
+        if(isLoggedIn == "true") {
+          this.router.navigateByUrl('tabs', {replaceUrl:true})
+        } else {
+          this.router.navigateByUrl('login', {replaceUrl:true})
+        }
+    })
   }
 
-  initializeApp() {
+  async initializeApp() {
+     
     SplashScreen.hide();
   }
 
@@ -49,13 +67,15 @@ export class AppComponent implements OnInit{
     this.menuCtrl.toggle();
     // logging out
     await this.auth.signOut().then(() => {
+      localStorage.setItem('loggedin', 'false')
       // disable background mode because nothing should be running if logged out.
       this.backgroundMode.disable();
     });
-    this.router.navigate([''])
+    this.router.navigate(['login'])
   }
 
   ngOnInit() {
+    
     const path = window.location.pathname.split('/')[1];
     if (path !== undefined) {
       this.currentPageIndex = this.menuPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());

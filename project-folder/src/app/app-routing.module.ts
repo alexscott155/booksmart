@@ -43,6 +43,11 @@ const routes: Routes = [
   },
   {
     path: '',
+    redirectTo:'/tabs/swipe',
+    pathMatch: 'full' 
+  },
+  {
+    path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
