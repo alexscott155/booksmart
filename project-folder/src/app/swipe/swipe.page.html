@@ -26,7 +26,7 @@
   <!-- <ion-list> -->
     <!-- <ion-item class="" *ngFor="let book of (books | async)" (click)="openbookDetails(book.id)"> -->
     <!-- <ion-item class="" *ngFor="let book of (parsedBooks | async)"> -->
-    <ion-item class="" *ngFor="let book of parsedBooks">
+    <ion-item class="" *ngFor="let book of (parsedBooks | async) ">
       <ion-label class="">
         <ion-thumbnail slot="start">
           <ion-img src={{book.volumeInfo.imageLinks.thumbnail}}></ion-img>

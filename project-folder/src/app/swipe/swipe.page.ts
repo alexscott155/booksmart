@@ -34,23 +34,15 @@ export class SwipePage implements OnInit {
         // User is signed in.
       }
     });
+   
   }
 
   ngOnInit() {
-    this.bookService.prepRequest()
-      .subscribe(
-        data => {
-          this.books = JSON.stringify(data);
-          console.log("BOOKS:");
-          console.log(this.books);
-          this.parsedBooks = JSON.parse(this.books).items;
-          console.log("BOOKS:");
-          console.log(this.parsedBooks);
-        }
-      )
-      this.wishlist = this.wishlistService.getWishlist();
-      this.wishlistItemCount = this.wishlistService.getWishlistItemCount();
+    this.parsedBooks = this.bookService.swipePageCall();
+    console.log("parsed books in swipe:",this.parsedBooks)
   }
+
+
 
   addToWishlist(book) {
     this.wishlistService.addBook(book);
@@ -85,7 +77,22 @@ export class SwipePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    
+
+    // var interest = this.booksService.pickInterest()
+    // book = this.bookService.book;
+    // this.bookService.prepRequest()
+    // .subscribe(
+    //   data => {
+    //     this.books = JSON.stringify(data);
+    //     console.log("BOOKS:");
+    //     console.log(this.books);
+    //     this.parsedBooks = JSON.parse(this.books).items;
+    //     console.log("BOOKS:");
+    //     console.log(this.parsedBooks);
+    //   }
+    // )
+    this.wishlist = this.wishlistService.getWishlist();
+    this.wishlistItemCount = this.wishlistService.getWishlistItemCount();
   }
 
 

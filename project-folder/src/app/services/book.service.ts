@@ -22,9 +22,17 @@ export class BookService {
   interestsLength:any;
   books: string;
   randomInterest:string;
+  parsedBooks:any;
+  book:any; 
+
   constructor( private http: HttpClient,
     private angularFirestore: AngularFirestore,
     public firebaseService: FirebaseService) { 
+
+
+  }
+
+  swipePageCall() {
     this.books ='';
     this.interestCollection = this.angularFirestore.collection<InterestType>('interests', ref=> ref.where('uid', "==", this.uid));
     console.log(this.interestCollection)
@@ -44,12 +52,45 @@ export class BookService {
     .subscribe( res => {
         this.interestsArray = res;
         console.log("INTERESTS ARRAY: ", this.interestsArray);
-        this.interestsLength = res.length;
-        var interestIndex = Math.floor(Math.random() * this.interestsLength);
-        this.interest = res[interestIndex];
+        // this.interestsLength = res.length;
+        // this.interestIndex = Math.floor(Math.random() * this.interestsLength);
+        // this.interest = res[interestIndex];
         this.randomInterest= this.pickInterest()
-     })
+        console.log("random interest inside subscribe", this.randomInterest)
+        // this.book = this.prepRequest()
+        console.log("Choosen interest: " + this.randomInterest)
+        const dataUrl = "https://www.googleapis.com/books/v1/volumes?q="+this.randomInterest
+        
+        // return this.http.get(dataUrl);
+        // .subscribe(
+        this.http.get(dataUrl) 
+        .toPromise().then(
+          data => {
+            this.books = JSON.stringify(data);
+            console.log("BOOKS:");
+            console.log(this.books);
+            this.parsedBooks = JSON.parse(this.books).items;
+            console.log("BOOKS IN THE THEN:");
+            console.log(this.parsedBooks);
+            return this.parsedBooks;
+            // return this.parsedBooks
+          }
+        )
+        ;
+    //     .subscribe(
+    //   //   data => {
+    //   //   this.books = JSON.stringify(data);
+    //   //   console.log("BOOKS:");
+    //   //   console.log(this.books);
+    //   //   this.parsedBooks = JSON.parse(this.books).items;
+    //   //   console.log("BOOKS:");
+    //   //   console.log(this.parsedBooks);
+    //   // }
+    // )
 
+     })
+    //  console.log("this.book in swipe call function:",this.book)
+    //  return this.book;
   }
 
   ionViewWillEnter() {
@@ -67,18 +108,36 @@ export class BookService {
     // this.pickBook(this.interests);
     // const dataUrl = "https://www.googleapis.com/books/v1/volumes?q=subject:"+this.interest.interest
     // var randomInterest = this.pickInterest()
-    console.log("Choosen interest: " + this.randomInterest)
-    const dataUrl = "https://www.googleapis.com/books/v1/volumes?q="+this.randomInterest
-    
-    return this.http.get(dataUrl);
+
+      
+    // )
+    // .toPromise(
+    //   data => {
+    //     this.books = JSON.stringify(data);
+    //     console.log("BOOKS:");
+    //     console.log(this.books);
+    //     this.parsedBooks = JSON.parse(this.books).items;
+    //     console.log("BOOKS:");
+    //     console.log(this.parsedBooks);
+    //     // return this.parsedBooks
+    //   }
+    // )
+    // console.log(this.)
+    return this.parsedBooks
   }
 
   pickInterest(){
-    console.log(this.interestsLength)
-    var interestIndex = Math.floor(Math.random() * this.interestsArray.length-1);
-    var bookIndex = Math.floor(Math.random() * 10);
+    // console.log(this.interestsLength)
+    var maxIndex = this.interestsArray.length - 1;
+    console.log("max index:",maxIndex)
+    var interestIndex = Math.floor(Math.random() * maxIndex);
+    // var bookIndex = Math.floor(Math.random() * 10);
+    console.log("interest array inside pick interest:",this.interestsArray)
+    console.log("interest length inside pick interest:",this.interestsArray.length)
 
-    return this.interestsArray[interestIndex].interest
+    console.log("Interest Index: ", interestIndex)
+    console.log(this.interestsArray[interestIndex].interest);
+    return this.interestsArray[interestIndex].interest;
 
     // var interestInfo:any = this.getOpportunityByIndex(interestIndex);
   //  var test = await this.getOpportunityByIndex(interestIndex)
