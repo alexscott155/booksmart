@@ -26,6 +26,7 @@
     "@ionic-native/core": "^5.32.1",
     "@ionic-native/local-notifications": "^5.32.1",
     "@ionic/angular": "^5.5.2",
+    "@ionic/storage-angular": "^3.0.6",
     "animate.css": "^4.1.1",
     "cordova-plugin-local-notification": "*",
     "firebase": "^8.2.9",
