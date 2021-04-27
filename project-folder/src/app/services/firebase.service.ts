@@ -31,7 +31,7 @@ export class FirebaseService {
       return await this.auth.signInWithEmailAndPassword(email.value, password.value)
         .then(async (resp) => {
           localStorage.setItem('loggedin', 'true')
-          
+          localStorage.setItem('uid', this.uid)
           console.log("uid in fb",this.uid)
           this.router.navigateByUrl('tabs')
         })
@@ -39,6 +39,10 @@ export class FirebaseService {
           this.errorLogin(error)
         })
       })
+  }
+
+  returnUserID(){
+    return (localStorage.getItem('uid'));
   }
 
   

@@ -68,6 +68,7 @@ export class AppComponent implements OnInit{
     // logging out
     await this.auth.signOut().then(() => {
       localStorage.setItem('loggedin', 'false')
+      localStorage.setItem('uid', undefined)
       // disable background mode because nothing should be running if logged out.
       this.backgroundMode.disable();
     });

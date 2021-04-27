@@ -9,6 +9,7 @@ import { WishlistService } from './../services/wishlist.service';
 import { WishlistPage } from '../wishlist/wishlist.page';
 import { BehaviorSubject } from 'rxjs';
 import { ModalController } from '@ionic/angular';
+import { InterestType } from '../models/interest.model';
 
 
 @Component({
@@ -19,28 +20,39 @@ import { ModalController } from '@ionic/angular';
 export class SwipePage implements OnInit {
   wishlist = [];
   wishlistItemCount: BehaviorSubject<number>;
-
+  itemsList: Observable<InterestType[]>;
 @ViewChild('wishlist', {static: false, read: ElementRef})fab: ElementRef;
 
   books:string;
   parsedBooks:any;
-
+  interest:any
   constructor(
     private menu: MenuController,
     public bookService: BookService, private wishlistService: WishlistService, private modalCtrl: ModalController
     ) {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-      }
-    });
    
-  }
+    }
 
   ngOnInit() {
-    this.parsedBooks = this.bookService.swipePageCall();
-    console.log("parsed books in swipe:",this.parsedBooks)
+    this.itemsList = this.bookService.returnList();
+    this.itemsList.subscribe(async res=>{
+      this.interest = await this.pickInterest(res)
+      console.log(this.interest.interest)
+      this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
+        this.parsedBooks = (res["items"])
+      })
+    })
   }
+
+
+  pickInterest(interestList:any){
+    let maxIndex = interestList.length
+    console.log("max index:",maxIndex)
+    let interestIndex = Math.floor(Math.random() * maxIndex);
+    return interestList[interestIndex];
+  }
+
+  
 
 
 
