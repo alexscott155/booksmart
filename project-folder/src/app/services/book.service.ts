@@ -25,9 +25,11 @@ export class BookService {
   parsedBooks:any;
   book:any; 
 
-  constructor( private http: HttpClient,
+  constructor ( 
+    private http: HttpClient,
     private angularFirestore: AngularFirestore,
-    public firebaseService: FirebaseService) { 
+    public firebaseService: FirebaseService
+    ) { 
     this.interestCollection = this.angularFirestore.collection<InterestType>('interests', ref=> ref.where('uid', "==", this.uid));
     this.interests = this.interestCollection.snapshotChanges().pipe(
       map(actions => {
@@ -38,7 +40,6 @@ export class BookService {
         });
       })
     )
-
   }
 
   returnList(){

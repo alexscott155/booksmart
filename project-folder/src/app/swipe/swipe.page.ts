@@ -39,7 +39,8 @@ export class SwipePage implements OnInit {
       this.interest = await this.pickInterest(res)
       console.log(this.interest.interest)
       this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
-        this.parsedBooks = (res["items"])
+        this.parsedBooks = (res["items"][0])
+        console.log(this.parsedBooks)
       })
     })
   }

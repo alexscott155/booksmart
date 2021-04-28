@@ -17,30 +17,45 @@
 
 <ion-content>
 
-  <ion-list>
+  <!-- <ion-list>
     <ion-list-header>
       <ion-label>Books</ion-label>
       
-    </ion-list-header>
+    </ion-list-header> -->
   <!-- {{this.parsedBooks[0].volumeInfo.title}} -->
   <!-- <ion-list> -->
     <!-- <ion-item class="" *ngFor="let book of (books | async)" (click)="openbookDetails(book.id)"> -->
     <!-- <ion-item class="" *ngFor="let book of (parsedBooks | async)"> -->
-    <ion-item class="" *ngFor="let book of parsedBooks ">
+    <!-- <ion-item class="" *ngFor="let book of parsedBooks "> -->
+      <ion-card [routerLink]="'/book-detail'">
+        <img src={{parsedBooks.volumeInfo.imageLinks.thumbnail}} />
+        <ion-card-header>
+          
+          <ion-card-title> {{parsedBooks.volumeInfo.title}}</ion-card-title>
+          <ion-card-subtitle>By: {{parsedBooks.volumeInfo.authors}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          {{parsedBooks.volumeInfo.description}}
+        </ion-card-content>
+      </ion-card>
+
+
+
+    <!-- <ion-item class="">
       <ion-label class="">
         <ion-thumbnail slot="start">
-          <ion-img src={{book.volumeInfo.imageLinks.thumbnail}}></ion-img>
+          <ion-img src={{parsedBooks.volumeInfo.imageLinks.thumbnail}}></ion-img>
         </ion-thumbnail>
       </ion-label>
-      <ion-button (onclick)=addToWishlist(book.id)>
+      <ion-button (onclick)=addToWishlist(parsedBooks.id)>
    
       </ion-button>
       <ion-label>
-        {{book.volumeInfo.title}}
+        {{parsedBooks.volumeInfo.title}}
       </ion-label>
-        <ion-button fill="clear" (click)="addToWishlist(book)">
+        <ion-button fill="clear" (click)="addToWishlist(parsedBooks)">
           <ion-icon name="add"></ion-icon>
         </ion-button>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 </ion-content>

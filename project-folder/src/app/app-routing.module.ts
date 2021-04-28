@@ -69,6 +69,10 @@ const routes: Routes = [
   {
     path: 'change',
     loadChildren: () => import('./change/change.module').then( m => m.ChangePageModule)
+  },
+  {
+    path: 'book-detail',
+    loadChildren: () => import('./book-detail/book-detail.module').then( m => m.BookDetailPageModule)
   }
 ];
 @NgModule({
