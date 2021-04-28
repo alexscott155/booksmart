@@ -1,13 +1,15 @@
+
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button>
       </ion-back-button>
     </ion-buttons>
-    <ion-title>BookDetail</ion-title>
+    <ion-title>{{parsedBook?.volumeInfo.title}}l</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <iframe frameborder="0" scrolling="no" style="border:0px" [src]="safeResourceUrl" width=400 height=500></iframe>
 </ion-content>
