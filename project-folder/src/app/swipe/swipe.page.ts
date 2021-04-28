@@ -39,7 +39,8 @@ export class SwipePage implements OnInit {
       this.interest = await this.pickInterest(res)
       console.log(this.interest.interest)
       this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
-        this.parsedBooks = (res["items"][0])
+        let randomBook = Math.floor(Math.random() * 10);
+        this.parsedBooks = (res["items"][randomBook])
         console.log(this.parsedBooks)
       })
     })
@@ -90,6 +91,7 @@ export class SwipePage implements OnInit {
   }
 
   ionViewWillEnter() {
+
 
     // var interest = this.booksService.pickInterest()
     // book = this.bookService.book;
