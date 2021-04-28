@@ -10,6 +10,7 @@ import { WishlistPage } from '../wishlist/wishlist.page';
 import { BehaviorSubject } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { InterestType } from '../models/interest.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class SwipePage implements OnInit {
   parsedBooks:any;
   interest:any
   constructor(
+    private router: Router,
     private menu: MenuController,
     public bookService: BookService, private wishlistService: WishlistService, private modalCtrl: ModalController
     ) {
@@ -51,6 +53,10 @@ export class SwipePage implements OnInit {
     console.log("max index:",maxIndex)
     let interestIndex = Math.floor(Math.random() * maxIndex);
     return interestList[interestIndex];
+  }
+
+  GoBookDetail(book:any){
+    this.router.navigate(['/book-detail',book])
   }
 
   

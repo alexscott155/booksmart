@@ -27,15 +27,15 @@
     <!-- <ion-item class="" *ngFor="let book of (books | async)" (click)="openbookDetails(book.id)"> -->
     <!-- <ion-item class="" *ngFor="let book of (parsedBooks | async)"> -->
     <!-- <ion-item class="" *ngFor="let book of parsedBooks "> -->
-      <ion-card [routerLink]="'/book-detail'">
-        <img src={{parsedBooks.volumeInfo.imageLinks.thumbnail}} />
+      <ion-card (click)='GoBookDetail(parsedBooks)'>
+        <img src={{parsedBooks?.volumeInfo.imageLinks.thumbnail}} />
         <ion-card-header>
           
-          <ion-card-title> {{parsedBooks.volumeInfo.title}}</ion-card-title>
-          <ion-card-subtitle>By: {{parsedBooks.volumeInfo.authors}}</ion-card-subtitle>
+          <ion-card-title> {{parsedBooks?.volumeInfo.title}}</ion-card-title>
+          <ion-card-subtitle>By: {{parsedBooks?.volumeInfo.authors}}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          {{parsedBooks.volumeInfo.description}}
+          {{parsedBooks?.volumeInfo.description}}
         </ion-card-content>
       </ion-card>
 

@@ -74,6 +74,7 @@ const routes: Routes = [
     path: 'book-detail',
     loadChildren: () => import('./book-detail/book-detail.module').then( m => m.BookDetailPageModule)
   }
+
 ];
 @NgModule({
   imports: [

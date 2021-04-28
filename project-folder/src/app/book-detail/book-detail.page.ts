@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-detail',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./book-detail.page.scss'],
 })
 export class BookDetailPage implements OnInit {
-
-  constructor() { }
+  book:any
+  constructor(private router: Router, private route:ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(
+  		book=>{
+  			this.book = book;
+  			console.log(this.book)
+  		}
+  		)
   }
 
 }
