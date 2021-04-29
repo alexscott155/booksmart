@@ -23,7 +23,13 @@ export class SimilarBooksPage implements OnInit {
           console.log(this.parsedBooks)
         })
   		}
-  		)
+  	)
+  }
+
+  GoBookDetail(book:any){
+    this.router.navigate(['/book-detail',book])
   }
 
 }
+
+

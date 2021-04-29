@@ -29,7 +29,7 @@
     <!-- <ion-item class="" *ngFor="let book of parsedBook "> -->
       <ion-card>
         <div (click)='GoBookDetail(parsedBook)'>
-          <img class="full-image" src={{parsedBook?.volumeInfo.imageLinks.thumbnail}} />
+          <img class="full-image" src={{parsedBook?.volumeInfo.imageLinks?.thumbnail}} />
           <ion-card-header>
             
             <ion-card-title> {{parsedBook?.volumeInfo.title}}</ion-card-title>
@@ -49,10 +49,6 @@
       </ion-button>
       </ion-card>
      
-      <ion-item>
-          
-      </ion-item>
-  
 
 
 

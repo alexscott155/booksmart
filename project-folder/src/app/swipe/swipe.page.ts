@@ -65,6 +65,7 @@ export class SwipePage implements OnInit {
       this.interest = await this.pickInterest(res)
       console.log(this.interest?.interest)
       this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
+        console.log(res)
        this.chooseBookIndex();
        console.log("bookIndex: " + this.bookIndex)
         this.parsedBook = (res["items"][this.bookIndex])
@@ -78,8 +79,7 @@ export class SwipePage implements OnInit {
   }
 
   chooseBookIndex(){
-    var totalBooks = 10;
-    this.bookIndex = Math.floor(Math.random() * totalBooks);
+    this.bookIndex = Math.floor(Math.random() * 10);
   }
 
   pickInterest(interestList:any){

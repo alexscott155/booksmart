@@ -103,7 +103,7 @@ export class BookService {
 
 
   prepRequest(interest:any) {
-    const dataUrl = "https://www.googleapis.com/books/v1/volumes?q=subject:"+interest
+    const dataUrl = "https://www.googleapis.com/books/v1/volumes?q="+interest
     return this.http.get(dataUrl) 
   }
 

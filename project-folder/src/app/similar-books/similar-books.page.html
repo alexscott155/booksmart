@@ -11,8 +11,8 @@
 <ion-content>
 
  <ion-list *ngFor="let book of parsedBooks ">
-      <ion-card >
-        <img class="full-image" src={{book?.volumeInfo.imageLinks.thumbnail}} />
+      <ion-card (click)="GoBookDetail(book)">
+        <img class="full-image" src={{book?.volumeInfo.imageLinks?.thumbnail}} />
         <ion-card-header>
           
           <ion-card-title> {{book?.volumeInfo.title}}</ion-card-title>
