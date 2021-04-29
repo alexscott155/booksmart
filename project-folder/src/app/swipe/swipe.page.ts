@@ -59,6 +59,10 @@ export class SwipePage implements OnInit {
     this.router.navigate(['/book-detail',book])
   }
 
+  similarBooks(category:any){
+    this.router.navigate(['/similar-books',category])
+  }
+
   
 
 
