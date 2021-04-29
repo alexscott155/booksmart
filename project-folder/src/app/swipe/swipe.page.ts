@@ -25,8 +25,10 @@ export class SwipePage implements OnInit {
 @ViewChild('wishlist', {static: false, read: ElementRef})fab: ElementRef;
 
   books:string;
-  parsedBooks:any;
-  interest:any
+  parsedBook:any;
+  interest:any;
+  prevBookId:any;
+  bookIndex:any;
   constructor(
     private router: Router,
     private menu: MenuController,
@@ -36,17 +38,49 @@ export class SwipePage implements OnInit {
     }
 
   ngOnInit() {
+    this.prevBookId = '';
+    this.newBook()
+    
+    // this.itemsList = this.bookService.returnList();
+    // this.itemsList.subscribe(async res=>{
+    //   this.interest = await this.pickInterest(res)
+    //   console.log(this.interest.interest)
+    //   this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
+    //     var totalBooks = 10;
+    //     let bookIndex = Math.floor(Math.random() * totalBooks-1);
+    //     this.parsedBook = (res["items"][bookIndex])
+    //     console.log(this.parsedBook)
+    //   })
+    // })
+  }
+
+  newBook(){
+    if(this.parsedBook?.id != undefined){
+      this.prevBookId = this.parsedBook?.id;
+      console.log("prev book id:", this.prevBookId)
+    }
+   
     this.itemsList = this.bookService.returnList();
     this.itemsList.subscribe(async res=>{
       this.interest = await this.pickInterest(res)
-      console.log(this.interest.interest)
+      console.log(this.interest?.interest)
       this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
-        this.parsedBooks = (res["items"][0])
-        console.log(this.parsedBooks)
+       this.chooseBookIndex();
+       console.log("bookIndex: " + this.bookIndex)
+        this.parsedBook = (res["items"][this.bookIndex])
+        console.log(this.parsedBook)
+        while(this.parsedBook?.id == this.prevBookId || this.parsedBook?.volumeInfo.language != "en"){
+          this.chooseBookIndex();
+          this.parsedBook = (res["items"][this.bookIndex])
+        }
       })
     })
   }
 
+  chooseBookIndex(){
+    var totalBooks = 10;
+    this.bookIndex = Math.floor(Math.random() * totalBooks);
+  }
 
   pickInterest(interestList:any){
     let maxIndex = interestList.length
@@ -109,9 +143,9 @@ export class SwipePage implements OnInit {
     //     this.books = JSON.stringify(data);
     //     console.log("BOOKS:");
     //     console.log(this.books);
-    //     this.parsedBooks = JSON.parse(this.books).items;
+    //     this.parsedBook = JSON.parse(this.books).items;
     //     console.log("BOOKS:");
-    //     console.log(this.parsedBooks);
+    //     console.log(this.parsedBook);
     //   }
     // )
     this.wishlist = this.wishlistService.getWishlist();

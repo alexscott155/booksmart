@@ -22,26 +22,35 @@
       <ion-label>Books</ion-label>
       
     </ion-list-header> -->
-  <!-- {{this.parsedBooks[0].volumeInfo.title}} -->
+  <!-- {{this.parsedBook[0].volumeInfo.title}} -->
   <!-- <ion-list> -->
     <!-- <ion-item class="" *ngFor="let book of (books | async)" (click)="openbookDetails(book.id)"> -->
-    <!-- <ion-item class="" *ngFor="let book of (parsedBooks | async)"> -->
-    <!-- <ion-item class="" *ngFor="let book of parsedBooks "> -->
-      <ion-card (click)='GoBookDetail(parsedBooks)'>
-        <img class="full-image" src={{parsedBooks?.volumeInfo.imageLinks.thumbnail}} />
-        <ion-card-header>
-          
-          <ion-card-title> {{parsedBooks?.volumeInfo.title}}</ion-card-title>
-          <ion-card-subtitle>By: {{parsedBooks?.volumeInfo.authors}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          {{parsedBooks?.volumeInfo.description}}
-        </ion-card-content>
-      </ion-card>
-      <ion-item>
-          <ion-button fill="clear" (click)="similarBooks(parsedBooks?.volumeInfo.categories)">
+    <!-- <ion-item class="" *ngFor="let book of (parsedBook | async)"> -->
+    <!-- <ion-item class="" *ngFor="let book of parsedBook "> -->
+      <ion-card>
+        <div (click)='GoBookDetail(parsedBook)'>
+          <img class="full-image" src={{parsedBook?.volumeInfo.imageLinks.thumbnail}} />
+          <ion-card-header>
+            
+            <ion-card-title> {{parsedBook?.volumeInfo.title}}</ion-card-title>
+            <ion-card-subtitle>By: {{parsedBook?.volumeInfo.authors}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{parsedBook?.volumeInfo.description}}
+            <!-- <ion-button fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)"> -->
+          </ion-card-content>
+        </div>
+        
+        <ion-button class="ion-text-start" fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)">
           Similar books
         </ion-button>
+        <ion-button class="ion-float-right" fill="clear" (click)="newBook()">
+          <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+      </ion-button>
+      </ion-card>
+     
+      <ion-item>
+          
       </ion-item>
   
 
@@ -50,16 +59,16 @@
     <!-- <ion-item class="">
       <ion-label class="">
         <ion-thumbnail slot="start">
-          <ion-img src={{parsedBooks.volumeInfo.imageLinks.thumbnail}}></ion-img>
+          <ion-img src={{parsedBook.volumeInfo.imageLinks.thumbnail}}></ion-img>
         </ion-thumbnail>
       </ion-label>
-      <ion-button (onclick)=addToWishlist(parsedBooks.id)>
+      <ion-button (onclick)=addToWishlist(parsedBook.id)>
    
       </ion-button>
       <ion-label>
-        {{parsedBooks.volumeInfo.title}}
+        {{parsedBook.volumeInfo.title}}
       </ion-label>
-        <ion-button fill="clear" (click)="addToWishlist(parsedBooks)">
+        <ion-button fill="clear" (click)="addToWishlist(parsedBook)">
           <ion-icon name="add"></ion-icon>
         </ion-button>
     </ion-item>
