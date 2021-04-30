@@ -21,7 +21,6 @@ export class ChangePasswordPage implements OnInit {
 
   changePw() {
     var user = firebase.auth().currentUser;
-    console.log("old pw type:", typeof(this.oldPassword));
     var credential = firebase.auth.EmailAuthProvider.credential(
       user.email,
       this.oldPassword

@@ -20,7 +20,7 @@ export class RegisterPage implements OnInit {
   async register(email:any, password:any){
     await this.auth.createUserWithEmailAndPassword(email.value, password.value)
         .then(user => {
-          this.router.navigate([''])
+          this.router.navigate(['/interests'])
         })
         .catch(error => {
           this.errorRegister(error)

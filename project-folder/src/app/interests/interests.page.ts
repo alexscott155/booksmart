@@ -5,6 +5,8 @@ import { map, take } from 'rxjs/operators';
 import { InterestType } from '../models/interest.model'
 import { FirebaseService } from '../services/firebase.service';
 import { BookService } from '../services/book.service';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,6 +15,10 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./interests.page.scss'],
 })
 export class InterestsPage implements OnInit {
+  interestsLength:any;
+  noInterests:boolean = false;
+  firstTime:boolean = false;
+  
   uid = this.firebaseService.uid
   userInterest:InterestType = {
     uid: this.firebaseService.uid,
@@ -28,12 +34,12 @@ export class InterestsPage implements OnInit {
   constructor(
     private angularFirestore: AngularFirestore,
     public firebaseService: FirebaseService,
-    public bookService: BookService
+    public bookService: BookService,
+    public alertController: AlertController,
+    private router: Router
     ) {
-    console.log("getting this user: ", this.uid)
     this.interestCollection = this.angularFirestore.collection<InterestType>('interests', ref=> ref.where('uid', "==", this.uid));
     console.log(this.interestCollection)
-    // this.orderCollection =    this.angularFirestore.collection<OrderType>("orders", ref=> ref.where('uid', "==", uid));
     this.interests = this.interestCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(interest => {
@@ -43,6 +49,20 @@ export class InterestsPage implements OnInit {
         });
       })
     )
+     this.interests.subscribe(async interests=>{
+       this.interestsLength = interests.length;
+       console.log("interests this.interestsLength:",this.interestsLength)
+       if(this.interestsLength < 10 && !this.firstTime){
+        this.firstTime = true;
+        // this.firstTime2 = false;
+       }
+      // this.interest = await this.pickInterest(res)
+      // if(this.interest?.length==0){
+      //   this.noInterests=false;
+      // }else {
+      //   console.log(this.interest?.interest)
+     });
+    console.log("interests:",this.interests[0])
   }
 
   ngOnInit() {
@@ -70,7 +90,42 @@ export class InterestsPage implements OnInit {
     console.log(interests[0]);
   }
 
+  
+
   deleteInterest(id: string): Promise<void> {
-    return this.interestCollection.doc(id).delete();
+    if(this.interestsLength <= 10){
+      this.alertFailure("You need at least 10 interests");
+    } else {
+
+
+      
+      return this.interestCollection.doc(id).delete();
+    }
+  }
+
+  async alertFailure(error) {
+    const alert = await this.alertController.create({
+      message: error,
+      buttons: [
+    
+      {
+        text: 'Ok',
+        handler:() => {
+        
+        }
+      }
+    ]
+    });
+    await alert.present();
+  }
+
+  goHome(){
+    if(this.interestsLength < 10){
+      this.alertFailure("You need at least 10 interests");
+    } else {
+      this.router.navigate(['/tabs/swipe']);
+    }
+   
+
   }
 }
