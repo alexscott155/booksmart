@@ -55,6 +55,8 @@ export class SwipePage implements OnInit {
     // })
   }
 
+  
+
   newBook(){
     if(this.parsedBook?.id != undefined){
       this.prevBookId = this.parsedBook?.id;
@@ -64,12 +66,11 @@ export class SwipePage implements OnInit {
     this.itemsList = this.bookService.returnList();
     this.itemsList.subscribe(async res=>{
       this.interest = await this.pickInterest(res)
+      console.log(this.interest?.interest)
       if(this.interest?.length==0){
         this.noInterests=false;
       }else {
-        console.log(this.interest?.interest)
         this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
-          console.log(res)
          this.chooseBookIndex();
          console.log("bookIndex: " + this.bookIndex)
          console.log("all books: ", res["items"])
@@ -106,11 +107,11 @@ export class SwipePage implements OnInit {
     this.router.navigate(['/similar-books',category])
   }
 
-  
+  authorPage(author:any, currentBook:any){
+    this.router.navigate(['/author',{author:author[0],currentBookID:currentBook}])
+  }
 
-
-
-  addToWishlist(book) {
+  addToWishlist(book:any) {
     this.wishlistService.addBook(book);
     this.animateCSS('tada');
   }

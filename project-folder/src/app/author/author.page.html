@@ -1,9 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>author</ion-title>
+  <ion-buttons slot="start">
+      <ion-back-button>
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{this.author.author}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+ <ion-list *ngFor="let book of parsedBooksByAuthor ">
+      <ion-card (click)="GoBookDetail(book)">
+        <img class="full-image" src={{book?.volumeInfo.imageLinks?.thumbnail}} />
+        <ion-card-header>
+          
+          <ion-card-title> {{book?.volumeInfo.title}}</ion-card-title>
+          <ion-card-subtitle>By: {{book?.volumeInfo.authors}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          {{book?.volumeInfo.description}}
+        </ion-card-content>
+      </ion-card>
+  </ion-list>
+
 </ion-content>
+
