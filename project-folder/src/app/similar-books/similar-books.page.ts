@@ -27,7 +27,7 @@ export class SimilarBooksPage implements OnInit {
   }
 
   GoBookDetail(book:any){
-    this.router.navigate(['/book-detail',book])
+    this.router.navigate(['/tabs/book-detail',book])
   }
 
 }

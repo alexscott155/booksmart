@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('../timer/timer.module').then(m => m.TimerPageModule)
       },
       {
+        path: 'book-detail',
+        loadChildren: () => import('../book-detail/book-detail.module').then( m => m.BookDetailPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/swipe',
         pathMatch: 'full'
