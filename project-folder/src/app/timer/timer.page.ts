@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-timer',
@@ -8,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 export class TimerPage implements OnInit {
   private timer: any;
   private timerStart:boolean
-  constructor() { 
+  constructor( 
+    public alertController: AlertController,
+    public bookService: BookService
+    ) { 
   }
   ngOnInit() {
   }
@@ -27,9 +32,11 @@ export class TimerPage implements OnInit {
     setTimeout(() => {
       // console.log(hour,minute,second)
       if(hour !== 0 && minute !== 0 && second !== 0){
-        alert("Timer finished!");
+        // alert("Timer finished!");
+        this.alertTimerDone();
+        this.bookService.addToBookshelf();
       } else if(this.timerStart === false) {
-        alert("paused")
+        // alert("paused")
       } 
       else if (this.timerStart === true){
         dateSeconds -= 1;
@@ -38,4 +45,21 @@ export class TimerPage implements OnInit {
         }
     }, 1000);
   }
+
+  async alertTimerDone() {
+    const alert = await this.alertController.create({
+      message: 'You completed your reading goal!',
+      buttons: [
+      {
+        text: 'Ok',
+        handler:() => {
+        }
+      }
+    ]
+    });
+    await alert.present();
+  }
+
+
+
 }

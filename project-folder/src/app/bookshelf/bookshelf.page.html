@@ -8,5 +8,14 @@
 </ion-header>
 
 <ion-content>
+  <!-- <ion-card  *ngFor="let book of (books | async)"  (click)="openOrderDetails(order.id)" class="ion-text-center"> -->
+  <div  *ngFor="let book of (books | async)"   class="ion-text-center">
+    <img class="ion-self-wrap" src={{book.imgurl}} />
+    <!-- <ion-card-subtitle>{{order.date | date: 'mediumDate'}}</ion-card-subtitle>
+    <ion-card-subtitle>{{order.product}}</ion-card-subtitle>
+    <div># of units: {{order.amount}}</div>
+    <div>total: ${{order.totalPrice}}</div>
+    <div>user id: {{order.uid | slice:0:4}}</div> -->
+    </div>
 
 </ion-content>

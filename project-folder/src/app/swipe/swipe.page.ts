@@ -74,10 +74,12 @@ export class SwipePage implements OnInit {
          console.log("bookIndex: " + this.bookIndex)
          console.log("all books: ", res["items"])
           this.parsedBook = (res["items"][this.bookIndex])
+          this.bookService.setCurrentBook(this.parsedBook);
           console.log(this.parsedBook)
           while(this.parsedBook?.id == this.prevBookId || this.parsedBook?.volumeInfo.language != "en"){
             this.chooseBookIndex();
             this.parsedBook = (res["items"][this.bookIndex])
+            this.bookService.setCurrentBook(this.parsedBook);
           }
         })
       }

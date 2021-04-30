@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'app-book-detail',
   templateUrl: './book-detail.page.html',
@@ -15,11 +16,12 @@ export class BookDetailPage implements OnInit {
   embedBook:any
   displayBook:any
   safeResourceUrl: SafeResourceUrl;
+  
   constructor(
     private router: Router, 
     private route:ActivatedRoute,
     private http: HttpClient,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
     ) {
      
      }
