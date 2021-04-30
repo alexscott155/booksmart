@@ -30,6 +30,11 @@ export class BookService {
     private angularFirestore: AngularFirestore,
     public firebaseService: FirebaseService
     ) { 
+    this.restart();
+  }
+
+  restart(){
+    this.uid = this.firebaseService.returnUserID()
     this.interestCollection = this.angularFirestore.collection<InterestType>('interests', ref=> ref.where('uid', "==", this.uid));
     this.interests = this.interestCollection.snapshotChanges().pipe(
       map(actions => {
@@ -109,6 +114,7 @@ export class BookService {
 
   pickInterest(interestList:any){
     let maxIndex = interestList.length - 1;
+    console.log("in swipe interests:", interestList)
     console.log("max index:",maxIndex)
     let interestIndex = Math.floor(Math.random() * maxIndex);
     return interestList[interestIndex];

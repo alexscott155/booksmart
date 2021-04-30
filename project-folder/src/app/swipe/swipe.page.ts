@@ -68,6 +68,7 @@ export class SwipePage implements OnInit {
         this.noInterests=false;
       }else {
         console.log(this.interest?.interest)
+        console.log(this.interest?.interest)
         this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
           console.log(res)
          this.chooseBookIndex();
@@ -157,6 +158,9 @@ export class SwipePage implements OnInit {
     // )
     this.wishlist = this.wishlistService.getWishlist();
     this.wishlistItemCount = this.wishlistService.getWishlistItemCount();
+
+    this.bookService.restart();
+    this.newBook();
   }
 
 

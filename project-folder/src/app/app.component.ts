@@ -53,7 +53,7 @@ export class AppComponent implements OnInit{
         if(isLoggedIn == "true") {
           this.router.navigateByUrl('tabs', {replaceUrl:true})
         } else {
-          this.router.navigateByUrl('login', {replaceUrl:true})
+          this.router.navigateByUrl('/tabs/login', {replaceUrl:true})
         }
     })
   }
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit{
       // disable background mode because nothing should be running if logged out.
       this.backgroundMode.disable();
     });
-    this.router.navigate(['login'])
+    this.router.navigate(['/tabs/login'])
   }
 
   ngOnInit() {

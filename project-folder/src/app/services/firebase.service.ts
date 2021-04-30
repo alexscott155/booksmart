@@ -13,7 +13,7 @@ export class FirebaseService {
     public auth: AngularFireAuth,
     public angularFirestore: AngularFirestore,
     private router: Router,
-    private alertController: AlertController,
+    private alertController: AlertController
   ) 
   {
     firebase.auth().onAuthStateChanged((user) => {

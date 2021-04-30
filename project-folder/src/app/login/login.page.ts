@@ -6,6 +6,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { FirebaseService } from '../services/firebase.service';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private auth: AngularFireAuth, 
     public afStore: AngularFirestore,
-    public firebaseService: FirebaseService) { }
+    public firebaseService: FirebaseService,
+    public bookService: BookService) { }
   
   ngOnInit() {
 
@@ -29,8 +31,5 @@ export class LoginPage implements OnInit {
   goRegister(){
     this.router.navigate(['register']);
   }
-
-
-
 
 }
