@@ -29,6 +29,7 @@ export class SwipePage implements OnInit {
   interest:any;
   prevBookId:any;
   bookIndex:any;
+  noInterests:boolean;
   constructor(
     private router: Router,
     private menu: MenuController,
@@ -63,18 +64,24 @@ export class SwipePage implements OnInit {
     this.itemsList = this.bookService.returnList();
     this.itemsList.subscribe(async res=>{
       this.interest = await this.pickInterest(res)
-      console.log(this.interest?.interest)
-      this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
-        console.log(res)
-       this.chooseBookIndex();
-       console.log("bookIndex: " + this.bookIndex)
-        this.parsedBook = (res["items"][this.bookIndex])
-        console.log(this.parsedBook)
-        while(this.parsedBook?.id == this.prevBookId || this.parsedBook?.volumeInfo.language != "en"){
-          this.chooseBookIndex();
+      if(this.interest?.length==0){
+        this.noInterests=false;
+      }else {
+        console.log(this.interest?.interest)
+        this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
+          console.log(res)
+         this.chooseBookIndex();
+         console.log("bookIndex: " + this.bookIndex)
+         console.log("all books: ", res["items"])
           this.parsedBook = (res["items"][this.bookIndex])
-        }
-      })
+          console.log(this.parsedBook)
+          while(this.parsedBook?.id == this.prevBookId || this.parsedBook?.volumeInfo.language != "en"){
+            this.chooseBookIndex();
+            this.parsedBook = (res["items"][this.bookIndex])
+          }
+        })
+      }
+      
     })
   }
 

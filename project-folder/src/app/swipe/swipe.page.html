@@ -16,17 +16,6 @@
 </ion-header>
 
 <ion-content>
-
-  <!-- <ion-list>
-    <ion-list-header>
-      <ion-label>Books</ion-label>
-      
-    </ion-list-header> -->
-  <!-- {{this.parsedBook[0].volumeInfo.title}} -->
-  <!-- <ion-list> -->
-    <!-- <ion-item class="" *ngFor="let book of (books | async)" (click)="openbookDetails(book.id)"> -->
-    <!-- <ion-item class="" *ngFor="let book of (parsedBook | async)"> -->
-    <!-- <ion-item class="" *ngFor="let book of parsedBook "> -->
       <ion-card>
         <div (click)='GoBookDetail(parsedBook)'>
           <img class="full-image" src={{parsedBook?.volumeInfo.imageLinks?.thumbnail}} />
@@ -48,25 +37,9 @@
           <ion-icon color="danger" name="close-circle-outline"></ion-icon>
       </ion-button>
       </ion-card>
-     
-
-
-
-    <!-- <ion-item class="">
-      <ion-label class="">
-        <ion-thumbnail slot="start">
-          <ion-img src={{parsedBook.volumeInfo.imageLinks.thumbnail}}></ion-img>
-        </ion-thumbnail>
-      </ion-label>
-      <ion-button (onclick)=addToWishlist(parsedBook.id)>
-   
-      </ion-button>
-      <ion-label>
-        {{parsedBook.volumeInfo.title}}
-      </ion-label>
-        <ion-button fill="clear" (click)="addToWishlist(parsedBook)">
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
-    </ion-item>
-  </ion-list> -->
+      <!-- <div class="ion-text-center">
+        <h1 *ngIf="!noInterests">
+          You don't have any interests. Add interests to get recommendations.
+        </h1>
+       </div> -->
 </ion-content>

@@ -8,21 +8,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content>  
+ 
+
   <ion-input [(ngModel)]="userInterest.interest" placeholder="Enter Input" ></ion-input>
   <ion-button (click)="createInterest(userInterest)" expand="block" type="submit">Update</ion-button>
-  <ion-item class="" *ngFor="let interest of (interests | async)">
-    <ion-label class="" (click)="bookService.pickBook(interests)">
-      <ion-thumbnail slot="start">
+  <ion-list class="" *ngFor="let interest of (interests | async)">
+     <!-- Sliding item with text options on both sides -->
+    <ion-item-sliding>
 
-        {{interest.interest}}
-        <!-- <ion-img src={{book.volumeInfo.imageLinks.thumbnail}}></ion-img> -->
-      </ion-thumbnail>
-    </ion-label>
-    <!-- <ion-label>
-      {{book.volumeInfo.title}}
-    </ion-label> -->
-  </ion-item>
+      <ion-item>
+        <ion-label>{{interest.interest}}</ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteInterest(interest.id)">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
   <div id="interest-list">
 
   </div>

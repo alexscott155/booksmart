@@ -69,4 +69,8 @@ export class InterestsPage implements OnInit {
   logInterests(interests){
     console.log(interests[0]);
   }
+
+  deleteInterest(id: string): Promise<void> {
+    return this.interestCollection.doc(id).delete();
+  }
 }
