@@ -36,6 +36,9 @@
         <ion-button class="ion-text-start" fill="clear" (click)="authorPage(parsedBook?.volumeInfo.authors, parsedBook?.id)">
           Check out other books by author
         </ion-button>
+        <ion-button fill="clear" (click)="addToWishlist(parsedBook)">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
         <ion-button class="ion-float-right" fill="clear" (click)="newBook()">
           <ion-icon color="danger" name="close-circle-outline"></ion-icon>
       </ion-button>

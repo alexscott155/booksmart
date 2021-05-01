@@ -113,7 +113,6 @@ export class SwipePage implements OnInit {
 
   addToWishlist(book:any) {
     this.wishlistService.addBook(book);
-    this.animateCSS('tada');
   }
  
   async openWishlist() {

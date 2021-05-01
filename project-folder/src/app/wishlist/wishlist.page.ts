@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WishlistService } from '../services/wishlist.service';
 import { BookService } from '../services/book.service';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
@@ -12,7 +13,7 @@ export class WishlistPage implements OnInit {
 
   wishlist: BookService[] = [];
 
-  constructor(private wishlistService: WishlistService, private modalCtrl: ModalController, private alertCtrl: AlertController) { }
+  constructor(private wishlistService: WishlistService, private modalCtrl: ModalController, private alertCtrl: AlertController, private router: Router) { }
 
   ngOnInit() 
   {
@@ -30,6 +31,9 @@ export class WishlistPage implements OnInit {
   removeWishlistItem(book) {
     this.wishlistService.removeBook(book);
   } 
+  GoBookDetail(book:any){
+    this.router.navigate(['/tabs/book-detail',book])
+  }
  
   close() {
     this.modalCtrl.dismiss();
