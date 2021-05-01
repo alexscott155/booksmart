@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ChangePageRoutingModule } from './change-routing.module';
+import { ChangeEmailPageRoutingModule } from './change-email-routing.module';
 
-import { ChangePage } from './change.page';
+import { ChangeEmailPage } from './change-email.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChangePageRoutingModule
+    ChangeEmailPageRoutingModule
   ],
-  declarations: [ChangePage]
+  declarations: [ChangeEmailPage]
 })
-export class ChangePageModule {}
+export class ChangeEmailPageModule {}

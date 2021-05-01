@@ -66,10 +66,7 @@ const routes: Routes = [
     path: 'streak',
     loadChildren: () => import('./streak/streak.module').then( m => m.StreakPageModule)
   },
-  {
-    path: 'change',
-    loadChildren: () => import('./change/change.module').then( m => m.ChangePageModule)
-  },
+ 
   // {
   //   path: 'book-detail',
   //   loadChildren: () => import('./book-detail/book-detail.module').then( m => m.BookDetailPageModule)
@@ -77,11 +74,16 @@ const routes: Routes = [
   {
     path: 'change-password',
     loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
-  },  {
+  },
+  {
+    path: 'change-email',
+    loadChildren: () => import('./change-email/change-email.module').then( m => m.ChangeEmailPageModule)
+  },
+  {
     path: 'account-settings',
     loadChildren: () => import('./account-settings/account-settings.module').then( m => m.AccountSettingsPageModule)
   }
-
+  
 
 ];
 @NgModule({

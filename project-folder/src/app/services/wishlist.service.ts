@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BookService } from '../services/book.service';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishlistService {
-
   data: BookService[];
-
+  uid:any
+  private interests: Observable<any[]>;
+  private interestCollection: AngularFirestoreCollection<any>;
   private wishlistItems = [];
   private wishlistItemCount = new BehaviorSubject(0);
 
 
-  constructor() { }
+  constructor(private auth: AngularFireAuth
+    ,private db: AngularFirestore
+  ) {this.auth.user.subscribe(user =>{
+      this.uid =  user.uid
+    }) }
 
   getBooks() {
     return this.data;
@@ -28,7 +34,10 @@ export class WishlistService {
     return this.wishlistItemCount;
   }
  
-  addBook(book) {
+  async addBook(book:any) {
+    let addData = {}
+    addData['book'] = book
+    let uid = await this.uid
     let added = false;
     for (let w of this.wishlistItems) {
       if (w.id === book.id) {
@@ -42,6 +51,7 @@ export class WishlistService {
       this.wishlistItems.push(book);
     }
     this.wishlistItemCount.next(this.wishlistItemCount.value + 1);
+    return await this.db.collection("users/"+uid+"/wishlist").add(addData)
   }
  
   decreaseBook(book) {
