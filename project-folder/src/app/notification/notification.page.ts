@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import {FirebaseService} from '../services/firebase.service'
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+// import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { notification } from '../models/notifications'
 import { map } from 'rxjs/operators';
+import { AlertController, Platform } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+const { LocalNotifications } = Plugins;
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -18,8 +21,8 @@ export class NotificationPage implements OnInit {
   private notificationCollection:AngularFirestoreCollection<notification>;
   public uid:any
   public data:any
-  constructor(private router: Router,private db: AngularFirestore, private auth: FirebaseService, private localNotifications: LocalNotifications) {
-
+  constructor(private plt:Platform,private router: Router,private db: AngularFirestore, private auth: FirebaseService, private alertCtrl: AlertController) {
+    this.plt.ready().then(async () => {
       this.uid = this.auth.uid
       this.notificationCollection = this.db.collection<notification>('users/'+this.auth.uid+'/notifications');
       this.notification = this.notificationCollection.snapshotChanges().pipe(
@@ -27,25 +30,48 @@ export class NotificationPage implements OnInit {
         return actions.map(a => {
           this.data = a.payload.doc.data();
           const id:any = a.payload.doc.id;
-          let hour = new Date(this.data.timer).getHours()
-          let minute = new Date(this.data.timer).getMinutes()
+          console.log(this.data)
           // local notification schedule by weekday, hour, minute
-          this.localNotifications.schedule({
-            id: id,
-            title: this.data.title,
-            trigger: {
-              count: 1,
-              every: {weekday: this.data.numberbyDay, hour: (hour), minute: minute}
-            },
-            foreground: true
+          let date = new Date(this.data.time)
+          let currentDate = new Date()
+          console.log(date)
+          let schedule = (Math.abs(date.getTime()-currentDate.getTime()))
+          console.log(schedule)
+          let every:boolean
+          if (this.data.day !== 'Everyday') {
+            every = true
+          }
+          LocalNotifications.schedule({
+            notifications: [
+              {
+                title: this.data.title,
+                body: null,
+                id: 1,
+                schedule: {
+                  at: new Date(Date.now() + schedule), 
+                  every: every? 'week' : 'day'
+                },
+                sound: null,
+                attachments: null,
+                actionTypeId: "",
+                extra: null
+              }
+            ]
           });
           return {id, ...this.data}
         });
       }))
       this.notificationList = this.notification
+    })
+    
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    
+    if (!(await LocalNotifications.requestPermission()).granted) return;
+    LocalNotifications.areEnabled().then(res=>{
+      console.log(res)
+    });
   }
 
 
@@ -66,22 +92,12 @@ export class NotificationPage implements OnInit {
 }
 
 
-  async calculateNotificationTime(time:any, title:any) {
+  async calculateNotificationTime(time:any) {
     let date = new Date(time)
     let currentDate = new Date()
-    let hour:number
-    let minute:number 
     // get time set by ms
     let dif = Math.abs(date.getTime()-currentDate.getTime())
-    await this.msToHourMinute(dif).then((result:any)=>{
-      hour = result.hour
-      minute = result.minute
-    })
-    this.localNotifications.schedule({
-      title: title,
-      id: 1,
-      trigger: { every: {hour: hour, minute: minute} }
-    });
+    return dif
   }
 
   addNotification(){

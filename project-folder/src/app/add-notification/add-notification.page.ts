@@ -37,15 +37,23 @@ export class AddNotificationPage implements OnInit {
 
   }
 
+  async addedNotificationAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: 'Done! Check your notification list.',
+      buttons: ['OK']
+    });
+    await alert.present();
+    await alert.onDidDismiss();
+  }
+
 
   async setNotification() {
     if (!await this.title || !await this.timer || !await this.day) {
       await this.noTitleAlert()
       return;
     }
-    let date = new Date(await this.timer)
-    console.log(date.toLocaleTimeString())
-    await this.addNotification(date.toLocaleTimeString())
+    await this.addNotification(this.timer)
   }
 
   
@@ -59,6 +67,7 @@ export class AddNotificationPage implements OnInit {
 
 
   async addNotification(time:any){
+    this.addedNotificationAlert()
     let numberbyDay:any
     await this.numberbyDay(this.day).then(result=>{
       numberbyDay = result
@@ -71,6 +80,7 @@ export class AddNotificationPage implements OnInit {
     addData['day'] = this.day
     addData['time'] = time
     addData['numberbyDay'] = numberbyDay
+    addData['standardTime'] = new Date(time).toLocaleTimeString()
     return await this.db.collection("users/"+uid+"/notifications").add(addData)
   }
   
