@@ -76,8 +76,10 @@ export class AppComponent implements OnInit{
       localStorage.setItem('uid', undefined)
       // disable background mode because nothing should be running if logged out.
       this.backgroundMode.disable();
+      window.location.reload()
     });
     this.router.navigate(['login'])
+
   }
 
   ngOnInit() {
