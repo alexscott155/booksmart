@@ -35,6 +35,7 @@ export class TimerPage implements OnInit {
         // alert("Timer finished!");
         this.alertTimerDone();
         this.bookService.addToBookshelf();
+        this.bookService.addDate();
       } else if(this.timerStart === false) {
         // alert("paused")
       } 

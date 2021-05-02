@@ -34,6 +34,11 @@ export class AppComponent implements OnInit{
       title: 'Bookshelf',
       url: '/bookshelf',
       icon: 'albums'
+    },
+    {
+      title: 'Calendar',
+      url: '/calendar',
+      icon: 'calendar'
     }
   ];
   constructor(private platform: Platform ,private router: Router, private menuCtrl: MenuController,
