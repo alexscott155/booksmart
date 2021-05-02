@@ -66,12 +66,7 @@ export class WishlistService {
     this.wishlistItemCount.next(this.wishlistItemCount.value - 1);
   }
  
-  removeBook(book) {
-    for (let [index, w] of this.wishlistItems.entries()) {
-      if (w.id === book.id) {
-        this.wishlistItemCount.next(this.wishlistItemCount.value - w.amount);
-        this.wishlistItems.splice(index, 1);
-      }
-    }
+  removeBook(id:any) {
+    this.db.collection("users/"+this.uid+"/wishlist").doc(id).delete()
   }
 }

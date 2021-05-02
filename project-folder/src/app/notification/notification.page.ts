@@ -32,23 +32,27 @@ export class NotificationPage implements OnInit {
           const id:any = a.payload.doc.id;
           console.log(this.data)
           // local notification schedule by weekday, hour, minute
-          let date = new Date(this.data.time)
+          let date = new Date(new Date(this.data.time).setSeconds(0))
           let currentDate = new Date()
-          console.log(date)
+          // get days
+          let day = this.data.numberbyDay
+          let oneDay = 86400000
+          console.log(date.getTime(), currentDate.getTime())
           let schedule = (Math.abs(date.getTime()-currentDate.getTime()))
           console.log(schedule)
           let every:boolean
           if (this.data.day !== 'Everyday') {
             every = true
           }
+          let notificationTime = new Date(Date.now() + schedule + (oneDay * day))
           LocalNotifications.schedule({
             notifications: [
               {
                 title: this.data.title,
-                body: null,
+                body: "Your notification at "+ this.data.standardTime,
                 id: 1,
                 schedule: {
-                  at: new Date(Date.now() + schedule), 
+                  at: notificationTime,
                   every: every? 'week' : 'day'
                 },
                 sound: null,
@@ -105,7 +109,6 @@ export class NotificationPage implements OnInit {
   }
 
   deleteNotification(id:any){
-    console.log('deleting')
     this.db.collection("users/"+this.uid+"/notifications").doc(id).delete()
   }
 

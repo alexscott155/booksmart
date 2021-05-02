@@ -16,15 +16,13 @@ import { FirebaseService } from '../services/firebase.service';
 })
 export class WishlistPage implements OnInit {
   wishlists:Observable<any[]>
-  private wish: Observable<any[]>;
+  wish: Observable<any[]>;
+  
+  wishlistCollection:AngularFirestoreCollection<any>;
   uid:any
-  private wishlistCollection:AngularFirestoreCollection<any>;
-  wishlist: BookService[] = [];
-
-  constructor(firebaseService:FirebaseService,private auth: AngularFireAuth,private db: AngularFirestore,private wishlistService: WishlistService, private modalCtrl: ModalController, private alertCtrl: AlertController, private router: Router) {
-    
-    this.wishlistCollection = this.db.collection<any>('users/'+firebaseService.returnUserID()+'/wishlist');
-    this.wishlists = this.wishlistCollection.snapshotChanges().pipe(
+  constructor(firebaseService:FirebaseService,private auth: FirebaseService,private db: AngularFirestore,private wishlistService: WishlistService, private modalCtrl: ModalController, private alertCtrl: AlertController, private router: Router) {
+    this.wishlistCollection = this.db.collection<any>('users/'+this.auth.uid+'/wishlist');
+    this.wish = this.wishlistCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
@@ -33,13 +31,14 @@ export class WishlistPage implements OnInit {
           return {id, ...data}
         })
       }))
-          
-    
+    this.wishlists = this.wish;
+    console.log(this.wishlists)
   }
 
   ngOnInit() 
   {
-    this.wishlist = this.wishlistService.getWishlist();
+    console.log("hello")
+    
   }
  
   decreaseWishlistItem(book) {
@@ -50,8 +49,8 @@ export class WishlistPage implements OnInit {
     this.wishlistService.addBook(book);
   }
  
-  removeWishlistItem(book) {
-    this.wishlistService.removeBook(book);
+  removeWishlistItem(id:any) {
+    this.wishlistService.removeBook(id);
   } 
   GoBookDetail(book:any){
     this.router.navigate(['/tabs/book-detail',book])

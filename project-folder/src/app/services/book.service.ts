@@ -71,7 +71,7 @@ export class BookService {
 
   setCurrentBook(book:any){
     this.currentBook.title = book.volumeInfo?.title;
-    this.currentBook.imgurl = book.volumeInfo?.imageLinks.thumbnail;
+    this.currentBook.imgurl = book.volumeInfo?.imageLinks?.thumbnail;
     this.currentBook.uid = this.firebaseService.returnUserID();
   }
   // swipePageCall() {

@@ -78,9 +78,9 @@ export class AddNotificationPage implements OnInit {
     addData['date'] = date
     addData['title'] = this.title
     addData['day'] = this.day
-    addData['time'] = time
+    addData['time'] = new Date(new Date(time).setSeconds(0)).toISOString()
     addData['numberbyDay'] = numberbyDay
-    addData['standardTime'] = new Date(time).toLocaleTimeString()
+    addData['standardTime'] = new Date(new Date(time).setSeconds(0)).toLocaleTimeString()
     return await this.db.collection("users/"+uid+"/notifications").add(addData)
   }
   
