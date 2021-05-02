@@ -8,7 +8,7 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./timer.page.scss'],
 })
 export class TimerPage implements OnInit {
-  private timer: any;
+  private timer: any = 0;
   private timerStart:boolean
   constructor( 
     public alertController: AlertController,
@@ -29,17 +29,17 @@ export class TimerPage implements OnInit {
     let hour = date.getHours()
     let minute = date.getMinutes()
     let second = date.getSeconds()
+    
     setTimeout(() => {
-      // console.log(hour,minute,second)
-      if(hour !== 0 && minute !== 0 && second !== 0){
-        // alert("Timer finished!");
-        this.alertTimerDone();
-        this.bookService.addToBookshelf();
-      } else if(this.timerStart === false) {
-        // alert("paused")
-      } 
-      else if (this.timerStart === true){
-        dateSeconds -= 1;
+      if (this.timerStart === true){
+        if (new Date(dateSeconds * 1000).getSeconds() != 0) {
+          dateSeconds -=1
+        }
+        if(hour == 0 && minute == 0 && second == 0){
+          this.alertTimerDone();
+          this.bookService.addToBookshelf();
+          return;
+        }
         this.timer = (new Date(dateSeconds * 1000).toISOString())
         this.StartTimer();
         }
