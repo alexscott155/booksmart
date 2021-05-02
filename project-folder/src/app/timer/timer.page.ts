@@ -38,6 +38,7 @@ export class TimerPage implements OnInit {
         if(hour == 0 && minute == 0 && second == 0){
           this.alertTimerDone();
           this.bookService.addToBookshelf();
+          this.bookService.addDate();
           return;
         }
         this.timer = (new Date(dateSeconds * 1000).toISOString())

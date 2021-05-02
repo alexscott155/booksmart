@@ -8,6 +8,7 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from 
 import { FirebaseService } from './firebase.service';
 import { map } from 'rxjs/operators';
 import { BookType } from '../models/book.model';
+import { DateType } from '../models/date.model';
 
 
 
@@ -20,14 +21,22 @@ export class BookService {
     imgurl:'',
     title:''
   };
+  currentDate:DateType = {
+    uid: this.firebaseService.uid,
+    date:'',
+    time:'',
+    book:''
+  };
 
 
   interestsArray:InterestType[] = [];
   private interest:any
   private bookshelfBook: Observable<BookType[]>;
+  private calendarDate: Observable<DateType[]>;
   private interests: Observable<InterestType[]>;
   private interestCollection: AngularFirestoreCollection<InterestType>;
   private bookCollection: AngularFirestoreCollection<BookType>;
+  private dateCollection: AngularFirestoreCollection<DateType>;
   uid = this.firebaseService.returnUserID()
   interestsLength:any;
   books: string;
@@ -42,6 +51,7 @@ export class BookService {
     public firebaseService: FirebaseService
     ) { 
     this.bookCollection = this.angularFirestore.collection<BookType>('books', ref=> ref.where('uid', "==", this.uid));
+    this.dateCollection = this.angularFirestore.collection<DateType>('dates', ref=> ref.where('uid', "==", this.uid));
     // this.bookCollection = this.angularFirestore.collection<BookType>('books', ref=> ref.where('uid', "==", this.uid));
     this.interestCollection = this.angularFirestore.collection<InterestType>('interests', ref=> ref.where('uid', "==", this.uid));
     this.interests = this.interestCollection.snapshotChanges().pipe(
@@ -144,26 +154,44 @@ export class BookService {
   }
 
   getBookshelf(uid: string): Observable<BookType[]>{
-    // let user= this.fbAuthService.getCurrentUser();
-    // let uid= this.fbAuthService.uid;
-
-    // console.log("Current user:", uid);
-
-    // this.bookCollection = this.angularFirestore.collection<OrderType>("orders", ref=> ref.where('uid', "==", uid));
-    // this.orderCollection = this.angularFirestore.collection<OrderType>("orders");
 
     return this.bookshelfBook = this.bookCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(info => {
           const data = info.payload.doc.data();
           const id = info.payload.doc.id;
-          // console.log("id: " + id)
-          // console.log("data: " + data)
           return { id, ...data };
         });
       })
     )
 
+  }
+
+  addDate(){
+    var date = new Date().toLocaleDateString();
+    var tempDate = new Date();
+    var time = tempDate.getHours() + ":" + tempDate.getMinutes();
+
+    this.currentDate= {
+      uid: this.firebaseService.uid,
+      date: date,
+      time: time,
+      book: this.currentBook.title
+    }
+    return this.dateCollection.add(this.currentDate);
+
+  }
+  
+  getDates(): Observable<DateType[]>{
+    return this.calendarDate= this.dateCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(info => {
+          const data = info.payload.doc.data();
+          const id = info.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    )
   }
 
 }

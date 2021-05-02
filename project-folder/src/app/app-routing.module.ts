@@ -82,6 +82,10 @@ const routes: Routes = [
   {
     path: 'account-settings',
     loadChildren: () => import('./account-settings/account-settings.module').then( m => m.AccountSettingsPageModule)
+  },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./calendar/calendar.module').then( m => m.CalendarPageModule)
   }
   
 
