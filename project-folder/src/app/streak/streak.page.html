@@ -9,9 +9,9 @@
 
 <ion-content>
   <div class="streak-box">
-    <div class="highest">Highest Streak: 0</div>
-    <div class="current">Current Streak: 0</div>
+    <div class="highest">Highest Streak: {{ highStreak }}</div>
+    <div class="current">Streak: {{ currentStreak }}</div>
  
-    <ion-button>I Missed A Day</ion-button>
+    <ion-button (click)="Missed()">I Missed A Day of Reading</ion-button>
   </div>
 </ion-content>
