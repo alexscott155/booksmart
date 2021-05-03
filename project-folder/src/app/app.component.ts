@@ -39,6 +39,11 @@ export class AppComponent implements OnInit{
       title: 'Calendar',
       url: '/calendar',
       icon: 'calendar'
+    },
+    {
+      title: 'Streak',
+      url: '/streak',
+      icon: 'rocket'
     }
   ];
   constructor(private platform: Platform ,private router: Router, private menuCtrl: MenuController,
