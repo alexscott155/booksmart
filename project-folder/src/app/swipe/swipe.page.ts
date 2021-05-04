@@ -41,18 +41,6 @@ export class SwipePage implements OnInit {
   ngOnInit() {
     this.prevBookId = '';
     this.newBook()
-    
-    // this.itemsList = this.bookService.returnList();
-    // this.itemsList.subscribe(async res=>{
-    //   this.interest = await this.pickInterest(res)
-    //   console.log(this.interest.interest)
-    //   this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
-    //     var totalBooks = 10;
-    //     let bookIndex = Math.floor(Math.random() * totalBooks-1);
-    //     this.parsedBook = (res["items"][bookIndex])
-    //     console.log(this.parsedBook)
-    //   })
-    // })
   }
 
   
@@ -114,49 +102,8 @@ export class SwipePage implements OnInit {
   addToWishlist(book:any) {
     this.wishlistService.addBook(book);
   }
- 
-  async openWishlist() {
-    this.animateCSS('bounceOutLeft', true);
- 
-    let modal = await this.modalCtrl.create({
-      component: WishlistPage,
-      cssClass: 'wishlist'
-    });
-    modal.onWillDismiss().then(() => {
-      this.fab.nativeElement.classList.remove('animated', 'bounceOutLeft')
-      this.animateCSS('bounceInLeft');
-    });
-    modal.present();
-  }
- 
-  animateCSS(animationName, keepAnimated = false) {
-    const node = this.fab.nativeElement;
-    node.classList.add('animated', animationName)
-
-    function handleAnimationEnd() {
-      if (!keepAnimated) {
-        node.classList.remove('animated', animationName);
-      }
-      node.removeEventListener('animationend', handleAnimationEnd)
-    }
-    node.addEventListener('animationend', handleAnimationEnd)
-  }
 
   ionViewWillEnter() {
-
-    // var interest = this.booksService.pickInterest()
-    // book = this.bookService.book;
-    // this.bookService.prepRequest()
-    // .subscribe(
-    //   data => {
-    //     this.books = JSON.stringify(data);
-    //     console.log("BOOKS:");
-    //     console.log(this.books);
-    //     this.parsedBook = JSON.parse(this.books).items;
-    //     console.log("BOOKS:");
-    //     console.log(this.parsedBook);
-    //   }
-    // )
     this.wishlist = this.wishlistService.getWishlist();
     this.wishlistItemCount = this.wishlistService.getWishlistItemCount();
   }
