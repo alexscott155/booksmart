@@ -16,39 +16,41 @@
 </ion-header>
 
 <ion-content>
-      <ion-card>
-        <div (click)='GoBookDetail(parsedBook)'>
-          <img class="full-image" src={{parsedBook?.volumeInfo.imageLinks?.thumbnail}} />
-          <ion-card-header>
-            
-            <ion-card-title> {{parsedBook?.volumeInfo.title}}</ion-card-title>
-            <ion-card-subtitle>By: {{parsedBook?.volumeInfo.authors}}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            {{parsedBook?.volumeInfo.description}}
-            <!-- <ion-button fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)"> -->
-          </ion-card-content>
-        </div>
-        <div>
-          <ion-button class="ion-text-start" fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)">
-            Similar books
-          </ion-button>
-        </div>
-        <div>
-          <ion-button class="ion-text-start" fill="clear" (click)="authorPage(parsedBook?.volumeInfo.authors, parsedBook?.id)">
-            More by this author and similar authors
-          </ion-button>
-        </div>
-        <ion-button fill="clear" (click)="addToWishlist(parsedBook)">
-          <ion-icon name="add"></ion-icon>
+  <div *ngIf="noInterests" class="ion-text-center">
+    <h1 >
+      You have no interests yet!
+    </h1>
+  </div>
+  <div *ngIf="!noInterests">
+    <ion-card>
+      <div (click)='GoBookDetail(parsedBook)'>
+        <img class="full-image" src={{parsedBook?.volumeInfo.imageLinks?.thumbnail}} />
+        <ion-card-header>
+          
+          <ion-card-title> {{parsedBook?.volumeInfo.title}}</ion-card-title>
+          <ion-card-subtitle>By: {{parsedBook?.volumeInfo.authors}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          {{parsedBook?.volumeInfo.description}}
+        </ion-card-content>
+      </div>
+      <div>
+        <ion-button class="ion-text-start" fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)">
+          Similar books
         </ion-button>
-        <ion-button class="ion-float-right" fill="clear" (click)="newBook()">
-          <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+      </div>
+      <div>
+        <ion-button class="ion-text-start" fill="clear" (click)="authorPage(parsedBook?.volumeInfo.authors, parsedBook?.id)">
+          More by this author and similar authors
+        </ion-button>
+      </div>
+      <ion-button fill="clear" (click)="addToWishlist(parsedBook)">
+        <ion-icon name="add"></ion-icon>
       </ion-button>
-      </ion-card>
-      <!-- <div class="ion-text-center">
-        <h1 *ngIf="!noInterests">
-          You don't have any interests. Add interests to get recommendations.
-        </h1>
-       </div> -->
+      <ion-button class="ion-float-right" fill="clear" (click)="newBook()">
+        <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-card>
+  </div>
+     
 </ion-content>

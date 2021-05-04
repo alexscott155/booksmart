@@ -17,4 +17,9 @@
       <ion-button class="ion-margin-top" type="submit" (click)="this.firebaseService.login(email, password)" expand="block" size="default">Login</ion-button>
   </form>
 <ion-button class="ion-margin-top" type="submit" (click)="goRegister()"  expand="block"  fill="outline">No Account? Register</ion-button>
+
+<ion-button color="success" class="ion-margin-top" expand="block" (click)="this.firebaseService.googleSignIn()">
+  Google Signin
+</ion-button>
+
 </ion-content>
