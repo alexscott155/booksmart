@@ -67,23 +67,20 @@ export class SwipePage implements OnInit {
     this.itemsList.subscribe(async res=>{
       this.interest = await this.pickInterest(res)
       console.log(this.interest?.interest)
-      if(this.interest?.length==0){
-        this.noInterests=false;
-      }else {
-        this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
-         this.chooseBookIndex();
-         console.log("bookIndex: " + this.bookIndex)
-         console.log("all books: ", res["items"])
+      this.bookService.prepRequest(this.interest?.interest).toPromise().then(res=>{
+        this.chooseBookIndex();
+        console.log("bookIndex: " + this.bookIndex)
+        console.log("all books: ", res["items"])
+        this.parsedBook = (res["items"][this.bookIndex])
+        this.bookService.setCurrentBook(this.parsedBook);
+        console.log(this.parsedBook)
+        while(this.parsedBook?.id == this.prevBookId || this.parsedBook?.volumeInfo.language != "en"){
+          this.chooseBookIndex();
           this.parsedBook = (res["items"][this.bookIndex])
           this.bookService.setCurrentBook(this.parsedBook);
-          console.log(this.parsedBook)
-          while(this.parsedBook?.id == this.prevBookId || this.parsedBook?.volumeInfo.language != "en"){
-            this.chooseBookIndex();
-            this.parsedBook = (res["items"][this.bookIndex])
-            this.bookService.setCurrentBook(this.parsedBook);
-          }
-        })
-      }
+        }
+      })
+    
       
     })
   }
@@ -94,6 +91,9 @@ export class SwipePage implements OnInit {
 
   pickInterest(interestList:any){
     let maxIndex = interestList.length
+    if(maxIndex==0){
+      this.noInterests = true;
+    }
     console.log("max index:",maxIndex)
     let interestIndex = Math.floor(Math.random() * maxIndex);
     return interestList[interestIndex];

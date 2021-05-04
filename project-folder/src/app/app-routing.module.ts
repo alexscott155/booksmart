@@ -62,11 +62,6 @@ const routes: Routes = [
     path: 'wishlist',
     loadChildren: () => import('./wishlist/wishlist.module').then( m => m.WishlistPageModule)
   },
-  {
-    path: 'streak',
-    loadChildren: () => import('./streak/streak.module').then( m => m.StreakPageModule)
-  },
- 
   // {
   //   path: 'book-detail',
   //   loadChildren: () => import('./book-detail/book-detail.module').then( m => m.BookDetailPageModule)

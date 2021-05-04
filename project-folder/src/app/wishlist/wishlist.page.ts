@@ -61,7 +61,6 @@ export class WishlistPage implements OnInit {
   }
  
   async exit() {
-    // closeout
  
     let alert = await this.alertCtrl.create({
       header: 'Added to Wishlist',

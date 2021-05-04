@@ -56,4 +56,20 @@ export class FirebaseService {
     });
     await alert.present();
   }
+
+  googleSignIn(){
+    var googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    var self = this;
+    firebase.auth().signInWithPopup(googleAuthProvider).then((resp) => {
+      // /** @type {firebase.auth.OAuthCredential} */
+      localStorage.setItem('loggedin', 'true')
+      localStorage.setItem('uid', self.uid)
+      console.log("uid in fb",self.uid)
+      self.router.navigateByUrl('tabs')
+    }).catch((error) => {
+      this.errorLogin(error)
+    });
+  }
+
+
 }
