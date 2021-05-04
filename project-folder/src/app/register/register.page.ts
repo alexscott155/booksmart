@@ -4,7 +4,6 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -21,6 +20,8 @@ export class RegisterPage implements OnInit {
     await this.auth.createUserWithEmailAndPassword(email.value, password.value)
         .then(user => {
           this.router.navigate(['/interests'])
+          localStorage.setItem('loggedin', 'true')
+          localStorage.setItem('uid', user.user.uid)
         })
         .catch(error => {
           this.errorRegister(error)
