@@ -20,28 +20,66 @@ export class ChangeEmailPage implements OnInit {
 
 
   changeEm() {
-    firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(user=>{
-      user.user.updateEmail(this.newEmail).then(function() {
-        // Update successful.
+    var user = firebase.auth().currentUser;
+    var credential = firebase.auth.EmailAuthProvider.credential(
+      this.email,
+      this.password
+    );
+
+    var self = this;
+
+    user.reauthenticateWithCredential(credential).then(function() {
+      user.updateEmail(self.newEmail).then(function() {
+        self.alertSuccess();
+        self.clearFields();
         console.log("update successful")
-          }).catch(function(error) {
-            console.log("error updating email:",error)
-        // An error happened.
-          });
-    })
-    var user = firebase.auth().currentUser;
+      }).catch(function(error) {
+        self.clearFields();
+        self.alertFailure(error);
+        console.log("error updating email:",error)
+      });
+    }).catch(function(error) {
+      self.alertFailure(error);
+      self.clearFields();
+      console.log("reauth error:",error)
+    });
 
-    
+}
 
-    var user = firebase.auth().currentUser;
-var credential;
+clearFields(){
+  this.email = '';
+  this.password = '';
+  this.newEmail = '';
+}
 
-// Prompt the user to re-provide their sign-in credentials
+async alertSuccess() {
+  const alert = await this.alertController.create({
+    message: 'Update successful',
+    buttons: [
+  
+    {
+      text: 'Ok',
+      handler:() => {
 
-user.reauthenticateWithCredential(credential).then(function() {
-  // User re-authenticated.
-}).catch(function(error) {
-  // An error happened.
-});
-
-}}
+      }
+    }
+  ]
+  });
+  await alert.present();
+}
+async alertFailure(error) {
+  const alert = await this.alertController.create({
+    message: error,
+    buttons: [
+  
+    {
+      text: 'Ok',
+      handler:() => {
+      
+      }
+    }
+  ]
+  });
+  await alert.present();
+}
+}
