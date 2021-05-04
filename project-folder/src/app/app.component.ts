@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
       icon: 'settings'
     },
     {
-      title: 'Notification',
+      title: 'Reminders',
       url: '/notification',
       icon: 'notifications'
     },
