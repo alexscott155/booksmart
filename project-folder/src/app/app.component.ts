@@ -36,7 +36,7 @@ export class AppComponent implements OnInit{
       icon: 'albums'
     },
     {
-      title: 'Calendar',
+      title: 'Reading Log',
       url: '/calendar',
       icon: 'calendar'
     }

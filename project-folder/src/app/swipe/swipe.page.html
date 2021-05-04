@@ -4,12 +4,12 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Swipe
+      Recommendations
     </ion-title>
     <ion-buttons slot="end">
       <ion-button [routerLink]="'/wishlist'">
         <div class="wishlist-length">{{ wishlistItemCount | async }}</div>
-        <ion-icon name="star-outline" class="star-icon"></ion-icon>
+        <ion-icon name="heart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -29,13 +29,16 @@
             <!-- <ion-button fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)"> -->
           </ion-card-content>
         </div>
-        
-        <ion-button class="ion-text-start" fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)">
-          Similar books
-        </ion-button>
-        <ion-button class="ion-text-start" fill="clear" (click)="authorPage(parsedBook?.volumeInfo.authors, parsedBook?.id)">
-          Check out other books by author
-        </ion-button>
+        <div>
+          <ion-button class="ion-text-start" fill="clear" (click)="similarBooks(parsedBook?.volumeInfo.categories)">
+            Similar books
+          </ion-button>
+        </div>
+        <div>
+          <ion-button class="ion-text-start" fill="clear" (click)="authorPage(parsedBook?.volumeInfo.authors, parsedBook?.id)">
+            More by this author and similar authors
+          </ion-button>
+        </div>
         <ion-button fill="clear" (click)="addToWishlist(parsedBook)">
           <ion-icon name="add"></ion-icon>
         </ion-button>
